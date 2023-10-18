@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "592947917947",
+    "project_id": "technicaltest-44d10",
+    "storage_bucket": "technicaltest-44d10.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:592947917947:android:46aed6f6461588d13a1ede",
+        "android_client_info": {
+          "package_name": "com.andhikahouse.technicalflutter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "592947917947-eseg69emoorpo7j5jg5ccl550sidld3u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCH0_dpwVfkWZX0e7bXoRR0xWL1XOioXI0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "592947917947-eseg69emoorpo7j5jg5ccl550sidld3u.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "592947917947-lf2kimqvnrq7msoo2h37avc8db75fngf.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.techincalTestFlutter"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
