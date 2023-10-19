@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:techincal_test_flutter/config/theme/app_color.dart';
 import 'package:techincal_test_flutter/config/theme/app_font.dart';
 import 'package:techincal_test_flutter/feature/home/bloc/home_bloc.dart';
 import 'package:techincal_test_flutter/model/user_model.dart';
@@ -45,6 +46,16 @@ class DataHomeComponent extends StatelessWidget {
                         );
                       },
                     );
+            }
+            if (state is HomeLoading) {
+              return Center(
+                child: SizedBox(
+                    height: 25.h,
+                    width: 25.h,
+                    child: const CircularProgressIndicator(
+                      color: themeApp,
+                    )),
+              );
             }
             return Center(
               child: Text(

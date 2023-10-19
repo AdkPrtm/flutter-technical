@@ -31,98 +31,104 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: lightBackground,
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 22.w),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            70.0.height,
-            const HeaderHomeComponent(),
-            10.0.height,
-            const Divider(),
-            10.0.height,
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Data User',
-                  style: AppFontStyle().blackTextStyle.copyWith(
-                        fontSize: 22.sp,
-                        fontWeight: AppFontStyle().semibold,
-                      ),
-                ),
-                IconButton(
-                    onPressed: () {
-                      showDialog(
-                        context: context,
-                        builder: (_) => AlertDialog(
-                          title: const Text('Filter Data'),
-                          actions: [
-                            TextButton(
-                              child: const Text('All Data'),
-                              onPressed: () {
-                                setState(() {
-                                  filterVerified = false;
-                                  Navigator.pop(context);
-                                });
-                              },
-                            ),
-                            TextButton(
-                              child: const Text('User Verified'),
-                              onPressed: () {
-                                setState(() {
-                                  filterVerified = true;
-                                  Navigator.pop(context);
-                                });
-                              },
-                            ),
-                          ],
+      body: RefreshIndicator(
+        onRefresh: () async {
+          context.read<HomeBloc>().add(GetDataUserEvent());
+          await Future.delayed(Duration.zero);
+        },
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 22.w),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              70.0.height,
+              const HeaderHomeComponent(),
+              10.0.height,
+              const Divider(),
+              10.0.height,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Data User',
+                    style: AppFontStyle().blackTextStyle.copyWith(
+                          fontSize: 22.sp,
+                          fontWeight: AppFontStyle().semibold,
                         ),
-                      );
-                    },
-                    icon: const Icon(Icons.filter_list_rounded)),
-              ],
-            ),
-            10.0.height,
-            DataHomeComponent(filterVerified: filterVerified),
-            10.0.height,
-            BlocConsumer<AuthBloc, AuthState>(
-              listener: (context, state) {
-                if (state is AuthDone) {
-                  Navigator.pushNamedAndRemoveUntil(
-                    context,
-                    '/register',
-                    (route) => false,
-                  );
-                }
-                if (state is AuthFailed) {
-                  Fluttertoast.showToast(
-                    msg: state.message!,
-                    toastLength: Toast.LENGTH_SHORT,
-                    backgroundColor: Colors.grey,
-                    textColor: Colors.white,
-                    fontSize: 14.0.sp,
-                  );
-                }
-              },
-              builder: (context, state) {
-                if (state is AuthLoading) {
+                  ),
+                  IconButton(
+                      onPressed: () {
+                        showDialog(
+                          context: context,
+                          builder: (_) => AlertDialog(
+                            title: const Text('Filter Data'),
+                            actions: [
+                              TextButton(
+                                child: const Text('All Data'),
+                                onPressed: () {
+                                  setState(() {
+                                    filterVerified = false;
+                                    Navigator.pop(context);
+                                  });
+                                },
+                              ),
+                              TextButton(
+                                child: const Text('User Verified'),
+                                onPressed: () {
+                                  setState(() {
+                                    filterVerified = true;
+                                    Navigator.pop(context);
+                                  });
+                                },
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                      icon: const Icon(Icons.filter_list_rounded)),
+                ],
+              ),
+              10.0.height,
+              DataHomeComponent(filterVerified: filterVerified),
+              10.0.height,
+              BlocConsumer<AuthBloc, AuthState>(
+                listener: (context, state) {
+                  if (state is AuthDone) {
+                    Navigator.pushNamedAndRemoveUntil(
+                      context,
+                      '/register',
+                      (route) => false,
+                    );
+                  }
+                  if (state is AuthFailed) {
+                    Fluttertoast.showToast(
+                      msg: state.message!,
+                      toastLength: Toast.LENGTH_SHORT,
+                      backgroundColor: Colors.grey,
+                      textColor: Colors.white,
+                      fontSize: 14.0.sp,
+                    );
+                  }
+                },
+                builder: (context, state) {
+                  if (state is AuthLoading) {
+                    return CustomButton(
+                      title: '',
+                      onTap: () {},
+                      isDisable: true,
+                    );
+                  }
                   return CustomButton(
-                    title: '',
-                    onTap: () {},
-                    isDisable: true,
+                    title: 'Logout',
+                    onTap: () {
+                      context.read<AuthBloc>().add(LogoutEvent());
+                    },
                   );
-                }
-                return CustomButton(
-                  title: 'Logout',
-                  onTap: () {
-                    context.read<AuthBloc>().add(LogoutEvent());
-                  },
-                );
-              },
-            ),
-            10.0.height,
-          ],
+                },
+              ),
+              10.0.height,
+            ],
+          ),
         ),
       ),
     );

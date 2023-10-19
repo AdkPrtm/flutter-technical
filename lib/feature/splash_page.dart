@@ -6,7 +6,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
 import 'package:techincal_test_flutter/config/theme/app_color.dart';
 import 'package:techincal_test_flutter/feature/auth/bloc/auth_bloc.dart';
-import 'package:techincal_test_flutter/feature/home/service/home_service.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
@@ -29,7 +28,6 @@ class _SplashPageState extends State<SplashPage> {
         User? user = FirebaseAuth.instance.currentUser;
         if (user != null && user.emailVerified) {
           context.read<AuthBloc>().add(GetDataByIdEvent(uid: user.uid));
-          HomeService().getDataUser();
           Navigator.pushReplacementNamed(context, '/home');
         } else {
           Navigator.pushReplacementNamed(context, '/register');
